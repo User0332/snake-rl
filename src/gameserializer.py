@@ -3,21 +3,27 @@ import dill
 from pygame import Vector2
 
 Game = list['Turn']
+Games = list[Game]
 MappedFlattenedGame = list['MappedFlattenedTurn']
+MappedFlattenedGames = list[MappedFlattenedGame]
 
 @dataclass
 class MappedFlattenedTurn:
 	next_move: str
-	curr_board: list[float]
+	curr_direction: str
+	head_board: list[float]
+	body_board: list[float]
+	fruit_board: list[float]
+	combined_board: list[float]
 
 @dataclass
 class Turn:
 	direction: str
 	board: list[list[float]]
 
-def read_games() -> list[Game]:
+def read_games(fname: str='games.dill') -> list[Game]:
 	try:
-		data: list[Game] = dill.load(open('games.dill', 'rb'))
+		data: list[Game] = dill.load(open(fname, 'rb'))
 	except FileNotFoundError:
 		data = []
 		
